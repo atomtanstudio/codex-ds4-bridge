@@ -56,11 +56,13 @@ write_isolated_config() {
     {
         printf '%s\n' '# Isolated Codex DS4 config.'
         printf '%s\n' '# This file intentionally lives outside ~/.codex.'
+        printf '%s\n' 'model_provider = "oss"'
         printf '%s\n' 'model = "deepseek-v4-flash"'
         printf '%s\n' 'model_reasoning_effort = "high"'
         printf '%s\n' 'oss_provider = "lmstudio"'
         printf '\n'
         printf '%s\n' '[profiles.ds4]'
+        printf '%s\n' 'model_provider = "oss"'
         printf '%s\n' 'model = "deepseek-v4-flash"'
         printf '%s\n' 'model_reasoning_effort = "high"'
         printf '%s\n' 'oss_provider = "lmstudio"'

@@ -97,6 +97,8 @@ with:
 ```sh
 CODEX_OSS_BASE_URL=http://127.0.0.1:8788/v1
 CODEX_HOME=~/.codex-ds4/codex-home
+model_provider=oss
+oss_provider=lmstudio
 ```
 
 ## Optional: Create the Isolated macOS App
