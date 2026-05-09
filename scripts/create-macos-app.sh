@@ -71,7 +71,21 @@ LOG_FILE="\$LOG_DIR/codex-ds4-isolated-app.log"
 
 mkdir -p "\$LOG_DIR"
 
-exec /bin/sh "\$SCRIPT" "\$WORKSPACE" >>"\$LOG_FILE" 2>&1
+quote() {
+    printf "'%s'" "\$(printf "%s" "\$1" | sed "s/'/'\\\\''/g")"
+}
+
+COMMAND="exec /bin/sh \$(quote "\$SCRIPT") \$(quote "\$WORKSPACE") >>\$(quote "\$LOG_FILE") 2>&1"
+
+exec /usr/bin/osascript - "\$COMMAND" <<'APPLESCRIPT'
+on run argv
+    set cmd to item 1 of argv
+    tell application "Terminal"
+        activate
+        do script cmd
+    end tell
+end run
+APPLESCRIPT
 EOF
 
 chmod +x "$MACOS/codex-ds4-isolated-launcher"
