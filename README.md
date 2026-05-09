@@ -2,6 +2,8 @@
 
 Run Codex against local DeepSeek V4 Flash served by [`antirez/ds4`](https://github.com/antirez/ds4), with an optional isolated macOS app launcher.
 
+This is a proof of concept, not an official Codex or DS4 integration. It is shared so other people with high-memory Apple Silicon machines can reproduce it, improve it, or fork it into something cleaner.
+
 ## Credit Where It Belongs
 
 This project is a companion bridge. The hard and important work is [`ds4.c`](https://github.com/antirez/ds4) by Salvatore Sanfilippo / Antirez: a focused Apple Silicon Metal inference engine for DeepSeek V4 Flash.
@@ -27,6 +29,25 @@ Experimental path:
 - `Codex DS4 Isolated.app` -> isolated Codex Desktop process -> local proxy -> `ds4-server`
 
 The Desktop model picker may still show the normal hosted model name. The proof is the proxy request log. If a Codex turn writes `POST /v1/responses` to `harness/logs/codex-proxy-requests.log`, that request went through the DS4 bridge.
+
+## Important Performance Warning
+
+The isolated Codex Desktop path works, but it is not fast like hosted Codex.
+
+Codex Desktop sends a large prompt envelope even in chat-only mode. In local testing on a 128 GB M5 Max using the q2 DS4 model:
+
+- lightweight DS4 web UI prompt: about `1.2k` prompt tokens
+- isolated Codex Desktop chat prompt: about `5.7k` to `8.6k` prompt tokens after tool forwarding was disabled
+- full Codex/tool mode: about `20k+` prompt tokens in observed turns
+
+DS4 prefill on this machine was roughly `285-315 tokens/sec`, and generation was roughly `23-31 tokens/sec`. That means a large Codex prompt can spend tens of seconds in prefill before the first visible token.
+
+The bridge therefore has two practical modes:
+
+- **Fast chat / default:** tools are not forwarded. This is usable as a local DS4 chat interface inside Codex Desktop, but it is not the full Codex agent experience.
+- **Full tool experiment:** set `DS4_CODEX_FORWARD_TOOLS=1` before starting the proxy. This is more Codex-like, but prefill and tool-call latency can be very slow.
+
+The included lightweight web UI is the best way to measure DS4 itself without Codex overhead.
 
 ## Hardware
 
@@ -69,7 +90,7 @@ make
 Clone this bridge somewhere else:
 
 ```sh
-git clone https://github.com/YOUR_GITHUB_USER/codex-ds4-bridge.git
+git clone https://github.com/atomtanstudio/codex-ds4-bridge.git
 cd codex-ds4-bridge
 ```
 
@@ -132,6 +153,8 @@ The app uses isolated state:
 It refuses to launch if those paths are accidentally pointed at your normal Codex state.
 
 The launcher intentionally does not override `HOME`. macOS Keychain expects the real user home, and faking it can trigger scary keychain reset prompts.
+
+The app icon is included in `assets/CodexDS4.icns` and is copied into the generated app bundle.
 
 ## Verify It Is Really Using DS4
 

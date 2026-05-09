@@ -11,6 +11,7 @@ I built a small companion bridge for Codex:
 - launches Codex CLI against `deepseek-v4-flash`
 - optionally creates a separate `Codex DS4 Isolated.app`
 - keeps DS4 Codex state out of your normal Codex install
+- includes a tiny web UI for testing DS4 without Codex overhead
 
 The isolation mattered. My first desktop wrapper shared normal Codex Desktop state, and that was the wrong move. The safer version uses separate state under `~/.codex-ds4`:
 
@@ -25,6 +26,14 @@ DS4_KV_MB=8192
 ```
 
 That is intentionally lower than what DS4 can do. The goal is: get a 128 GB Apple Silicon machine running first, then raise context once the baseline is stable.
+
+The big caveat: Codex Desktop carries a large prompt envelope. On my 128 GB machine, the lightweight DS4 UI was fast, but isolated Codex Desktop still sent thousands of prompt tokens before my actual question. So this is a proof of concept, not magic hosted-Codex speed.
+
+By default I now run Desktop in chat-only mode: no Codex tools are forwarded to DS4. Full tool mode is possible, but slow:
+
+```sh
+DS4_CODEX_FORWARD_TOOLS=1
+```
 
 Basic flow:
 
@@ -55,6 +64,6 @@ POST /v1/responses
 
 Repo:
 
-TODO: add GitHub URL
+https://github.com/atomtanstudio/codex-ds4-bridge
 
-Huge credit to Antirez for building `ds4.c` and sharing the work.
+Huge credit to Antirez for building `ds4.c` and sharing the work. This repo is a bridge, not the engine.
