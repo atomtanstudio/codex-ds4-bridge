@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+logs/
+*.log
+*.pid
+*.bak.*
+
+# Local generated macOS app bundles.
+build/
+*.app/
+
+# Never commit model weights.
+*.gguf
+gguf/

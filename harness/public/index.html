@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DS4 Local Harness</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar" aria-label="Conversation controls">
+        <div class="brand">
+          <div class="mark">D4</div>
+          <div>
+            <h1>DS4 Harness</h1>
+            <p id="status">Checking server...</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <label for="systemPrompt">System</label>
+          <textarea id="systemPrompt" rows="5">You are a helpful assistant.</textarea>
+        </section>
+
+        <section class="panel settings">
+          <label for="maxTokens">Max tokens</label>
+          <input id="maxTokens" type="number" min="1" max="8192" value="1024" />
+
+          <label for="thinkingMode">Thinking</label>
+          <select id="thinkingMode">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+            <option value="off">Off</option>
+          </select>
+        </section>
+
+        <div class="actions">
+          <button id="newChat" type="button">New Chat</button>
+          <button id="stop" type="button" disabled>Stop</button>
+        </div>
+      </aside>
+
+      <section class="chat" aria-label="Chat">
+        <header class="topbar">
+          <div>
+            <strong>deepseek-v4-flash</strong>
+            <span>Local OpenAI-compatible chat</span>
+          </div>
+          <button id="ping" type="button">Ping</button>
+        </header>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <form id="composer" class="composer">
+          <textarea id="prompt" rows="3" placeholder="Ask DS4 something..."></textarea>
+          <button id="send" type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
