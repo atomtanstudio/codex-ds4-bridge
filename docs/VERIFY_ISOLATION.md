@@ -27,6 +27,8 @@ Take a snapshot:
 ./scripts/verify-isolation.sh snapshot
 ```
 
+The script checks Codex config, local state, session storage, and app preferences. It intentionally skips browser cache directories so the snapshot is fast enough to use in practice.
+
 Launch:
 
 ```text

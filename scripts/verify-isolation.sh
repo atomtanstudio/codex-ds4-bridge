@@ -11,9 +11,32 @@ usage() {
 }
 
 collect() {
-    for path in "$HOME/.codex" "$HOME/Library/Application Support/Codex"; do
+    codex_home="$HOME/.codex"
+    codex_app="$HOME/Library/Application Support/Codex"
+
+    for path in \
+        "$codex_home/config.toml" \
+        "$codex_home/state_5.sqlite" \
+        "$codex_home/models_cache.json" \
+        "$codex_home/.codex-global-state.json"
+    do
         if [ -e "$path" ]; then
-            find "$path" -type f -exec shasum -a 256 {} \; | sort
+            shasum -a 256 "$path"
+        else
+            echo "MISSING  $path"
+        fi
+    done
+
+    for path in \
+        "$codex_app/Local State" \
+        "$codex_app/Preferences" \
+        "$codex_app/Session Storage" \
+        "$codex_app/SharedStorage" \
+        "$codex_app/User" \
+        "$codex_app/WindowState"
+    do
+        if [ -e "$path" ]; then
+            find "$path" -type f -not -path '*/Cache/*' -not -path '*/Code Cache/*' -exec shasum -a 256 {} \; | sort
         else
             echo "MISSING  $path"
         fi

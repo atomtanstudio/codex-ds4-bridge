@@ -71,7 +71,7 @@ LOG_FILE="\$LOG_DIR/codex-ds4-isolated-app.log"
 
 mkdir -p "\$LOG_DIR"
 
-exec "\$SCRIPT" "\$WORKSPACE" >>"\$LOG_FILE" 2>&1
+exec /bin/sh "\$SCRIPT" "\$WORKSPACE" >>"\$LOG_FILE" 2>&1
 EOF
 
 chmod +x "$MACOS/codex-ds4-isolated-launcher"
