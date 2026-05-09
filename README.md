@@ -97,9 +97,10 @@ with:
 ```sh
 CODEX_OSS_BASE_URL=http://127.0.0.1:8788/v1
 CODEX_HOME=~/.codex-ds4/codex-home
-model_provider=oss
-oss_provider=lmstudio
+model_provider=ds4
 ```
+
+The isolated Desktop config defines `[model_providers.ds4]` with `base_url = "http://127.0.0.1:8788/v1"` and `wire_api = "responses"`.
 
 ## Optional: Create the Isolated macOS App
 

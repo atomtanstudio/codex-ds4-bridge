@@ -56,16 +56,23 @@ write_isolated_config() {
     {
         printf '%s\n' '# Isolated Codex DS4 config.'
         printf '%s\n' '# This file intentionally lives outside ~/.codex.'
-        printf '%s\n' 'model_provider = "oss"'
+        printf '%s\n' 'model_provider = "ds4"'
         printf '%s\n' 'model = "deepseek-v4-flash"'
+        printf '%s\n' 'model_context_window = 32768'
         printf '%s\n' 'model_reasoning_effort = "high"'
-        printf '%s\n' 'oss_provider = "lmstudio"'
         printf '\n'
         printf '%s\n' '[profiles.ds4]'
-        printf '%s\n' 'model_provider = "oss"'
+        printf '%s\n' 'model_provider = "ds4"'
         printf '%s\n' 'model = "deepseek-v4-flash"'
+        printf '%s\n' 'model_context_window = 32768'
         printf '%s\n' 'model_reasoning_effort = "high"'
-        printf '%s\n' 'oss_provider = "lmstudio"'
+        printf '\n'
+        printf '%s\n' '[model_providers.ds4]'
+        printf '%s\n' 'name = "DS4 Local"'
+        printf '%s\n' 'base_url = "http://127.0.0.1:8788/v1"'
+        printf '%s\n' 'wire_api = "responses"'
+        printf '%s\n' 'requires_openai_auth = false'
+        printf '%s\n' 'stream_idle_timeout_ms = 900000'
     } >"$config_file"
 }
 
