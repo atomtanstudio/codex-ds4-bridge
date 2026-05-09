@@ -102,6 +102,12 @@ model_provider=ds4
 
 The isolated Desktop config defines `[model_providers.ds4]` with `base_url = "http://127.0.0.1:8788/v1"` and `wire_api = "responses"`.
 
+By default the proxy does not forward Codex tool schemas to DS4. This makes simple chat much faster and avoids local DS4 spending a long time generating tool calls for normal prompts. To experiment with full agent/tool mode, start the proxy with:
+
+```sh
+DS4_CODEX_FORWARD_TOOLS=1 ./harness/start-codex-proxy.sh
+```
+
 ## Optional: Create the Isolated macOS App
 
 After installing the harness into DS4:

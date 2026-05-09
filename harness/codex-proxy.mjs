@@ -7,6 +7,7 @@ const port = Number.parseInt(process.env.PORT || "8788", 10);
 const ds4BaseUrl = (process.env.DS4_BASE_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
 const apiKey = process.env.DS4_API_KEY || "dsv4-local";
 const requestLogPath = process.env.DS4_PROXY_REQUEST_LOG || join(process.cwd(), "logs", "codex-proxy-requests.log");
+const forwardTools = process.env.DS4_CODEX_FORWARD_TOOLS === "1";
 
 function logRequest(req, url) {
   const stamp = new Date().toISOString();
@@ -181,6 +182,7 @@ async function createResponse(req, res) {
 
   const responseId = `resp_ds4_${Date.now().toString(36)}`;
   const messageId = `msg_ds4_${Date.now().toString(36)}`;
+  const tools = forwardTools ? responsesToolsToChatTools(body.tools) : undefined;
   const payload = {
     model: body.model || "deepseek-v4-flash",
     messages: responsesInputToMessages(body),
@@ -188,8 +190,8 @@ async function createResponse(req, res) {
     temperature: body.temperature,
     top_p: body.top_p,
     stream: Boolean(body.stream),
-    tools: responsesToolsToChatTools(body.tools),
-    tool_choice: body.tool_choice,
+    tools,
+    tool_choice: tools ? body.tool_choice : undefined,
     think: process.env.DS4_CODEX_THINK === "1",
   };
 
