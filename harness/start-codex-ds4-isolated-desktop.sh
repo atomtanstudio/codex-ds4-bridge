@@ -11,7 +11,6 @@ DS4_PROXY_URL="${DS4_PROXY_URL:-http://127.0.0.1:8788}"
 DS4_STATE_ROOT="${DS4_STATE_ROOT:-$REAL_HOME/.codex-ds4}"
 DS4_CODEX_HOME="${DS4_CODEX_HOME:-$DS4_STATE_ROOT/codex-home}"
 DS4_ELECTRON_USER_DATA="${DS4_ELECTRON_USER_DATA:-$DS4_STATE_ROOT/electron-user-data}"
-DS4_FAKE_HOME="${DS4_FAKE_HOME:-$DS4_STATE_ROOT/home}"
 CODEX_APP_BIN="${CODEX_APP_BIN:-/Applications/Codex.app/Contents/MacOS/Codex}"
 NORMAL_CODEX_HOME="$REAL_HOME/.codex"
 NORMAL_ELECTRON_USER_DATA="$REAL_HOME/Library/Application Support/Codex"
@@ -26,7 +25,7 @@ if [ "$DS4_ELECTRON_USER_DATA" = "$NORMAL_ELECTRON_USER_DATA" ]; then
     exit 1
 fi
 
-mkdir -p "$LOG_DIR" "$DS4_CODEX_HOME" "$DS4_ELECTRON_USER_DATA" "$DS4_FAKE_HOME"
+mkdir -p "$LOG_DIR" "$DS4_CODEX_HOME" "$DS4_ELECTRON_USER_DATA"
 
 is_up() {
     /usr/bin/curl -fsS "$1" >/dev/null 2>&1
@@ -102,7 +101,6 @@ export CODEX_HOME="$DS4_CODEX_HOME"
 export XDG_CONFIG_HOME="$DS4_STATE_ROOT/xdg-config"
 export XDG_CACHE_HOME="$DS4_STATE_ROOT/xdg-cache"
 export XDG_STATE_HOME="$DS4_STATE_ROOT/xdg-state"
-export HOME="$DS4_FAKE_HOME"
 
 mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_STATE_HOME"
 

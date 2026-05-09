@@ -16,7 +16,6 @@ The isolation mattered. My first desktop wrapper shared normal Codex Desktop sta
 
 - `~/.codex-ds4/codex-home`
 - `~/.codex-ds4/electron-user-data`
-- `~/.codex-ds4/home`
 
 The conservative default is:
 

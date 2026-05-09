@@ -118,10 +118,11 @@ The app uses isolated state:
 ```text
 ~/.codex-ds4/codex-home
 ~/.codex-ds4/electron-user-data
-~/.codex-ds4/home
 ```
 
 It refuses to launch if those paths are accidentally pointed at your normal Codex state.
+
+The launcher intentionally does not override `HOME`. macOS Keychain expects the real user home, and faking it can trigger scary keychain reset prompts.
 
 ## Verify It Is Really Using DS4
 

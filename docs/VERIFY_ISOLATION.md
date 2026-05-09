@@ -14,8 +14,9 @@ DS4 bridge paths:
 ```text
 ~/.codex-ds4/codex-home
 ~/.codex-ds4/electron-user-data
-~/.codex-ds4/home
 ```
+
+The bridge keeps the real `HOME` so macOS Keychain can find the normal login keychain. Isolation comes from `CODEX_HOME`, Electron `--user-data-dir`, and XDG cache/config/state paths.
 
 ## Manual Verification Flow
 
